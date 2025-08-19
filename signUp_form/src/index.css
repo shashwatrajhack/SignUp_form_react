@@ -3,3 +3,25 @@
 body{
     @apply bg-blue-900;
 }
+
+ /* className="p-2 m-2 border-2 rounded-md bg-gray-400 hover:bg-blue-700 text-white text-2xl text-center cursor-pointer" */
+
+.button1{
+    padding: 2px;
+    margin: 2px;
+    border: 2px solid black;
+    background-color: gray;
+}
+
+.clickedButton{
+    background-color: rgb(42, 42, 183);
+}
+
+.member p{
+    color: rgb(50, 50, 180);
+    font-size: 16px;
+    white-space: no-wrap;
+    text-align: center;
+    justify-content: center;
+}
+

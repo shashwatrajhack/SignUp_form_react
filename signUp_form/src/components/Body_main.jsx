@@ -1,92 +1,84 @@
-import React from "react";
-import { useState,useRef } from "react";
-//import { handleSave } from "../utils/handleSave";
-
+import { useState, useRef } from "react";
 
 function Body_main() {
   const [toggle, setToggle] = useState(false);
+
   const saveEmail = useRef("");
   const savePassword = useRef("");
   const saveUsername = useRef("");
 
   const handleSave = () => {
-  if (
-    saveEmail.current.value == "" ||
-    savePassword.current.value == "" ||
-    (toggle && saveUsername.current.value == "")
-  ) {
-    return window.alert("Add user !!");
-  }
-
-  // LOGIN
-  if (!toggle) {
-    const raw = localStorage.getItem("data");
-    if (!raw) return window.alert("User doesn't exist");
-
-    let users = [];
-    try {
-      users = JSON.parse(raw);
-    } catch {
-      return window.alert("Corrupted user data");
+    if (
+      saveEmail === "" ||
+      savePassword === "" ||
+      (toggle && saveUsername === "")
+    ) {
+      window.alert("fill the details");
     }
 
-    const emailInput = saveEmail.current.value.trim().toLowerCase();
-    const passInput = savePassword.current.value;
+    const data1 = localStorage.getItem("data");
 
-    // normalize each stored user to { email, password }
-    const user = users
-      .map((u) => ({
-        email: (u.email ?? u.saveEmail ?? "").trim().toLowerCase(),
-        password: (u.password ?? u.savePassword ?? "").trim(),
-      }))
-      .find((u) => u.email === emailInput && u.password === passInput);
-
-    if (user) {
-      window.alert("Login successful ✅");
+    if (data1 === null) {
+      if(!toggle){
+        return window.alert("user doesn't exist")
+      }
+      let arr = [
+        {
+          email: saveEmail.current.value,
+          password: savePassword.current.value,
+          userName: saveUsername.current.value,
+        },
+      ];
+      localStorage.setItem("data", JSON.stringify(arr));
     } else {
-      window.alert("Invalid credentials ❌");
-    }
-  }
+      let data2 = JSON.parse(data1);
+      for (let i = 0; i < data2.length; i++) {
+        if (toggle) {
+          if (
+            data2[i].email === saveEmail.current.value ||
+            data2[i].password === savePassword.current.value
+          ) {
+            return window.alert("user already exist");
+          }
+        }
+        else{
+          if (
+            data2[i].email === saveEmail.current.value &&
+            data2[i].password === savePassword.current.value
+          ) {
+            return window.alert("user loggedin");
+          }
+        }
+      }
 
-  if (saveEmail && savePassword) {
-    if (toggle && saveUsername) {
-      const userData = {
-        saveEmail: saveEmail.current.value,
-        savePassword: savePassword.current.value,
+      data2.push({
+        email: saveEmail.current.value,
+        password: savePassword.current.value,
         userName: saveUsername.current.value,
-      };
-
-      const existingData = JSON.parse(localStorage.getItem("data")) || [];
-
-      existingData.push(userData);
-      localStorage.setItem("data", JSON.stringify(existingData));
-      alert("User data saved to local storage as an object!");
+      });
+      localStorage.setItem("data", JSON.stringify(data2));
     }
-  }
-
-  saveEmail.current.value = "";
-  savePassword.current.value = "";
-  saveUsername.current.value = "";
-};
-
+    saveEmail.current.value = "";
+    savePassword.current.value = "";
+    saveUsername.current.value = "";
+    console.log(data1);
+  };
 
   return (
     <div>
       <div>
         <button
-          className="p-2 m-2 border-2 rounded-md bg-blue-800 text-white text-2xl text-center cursor-pointer"
+          className={`button1 ${!toggle ? "clickedButton" : ""}`}
           onClick={() => {
             setToggle(false);
-            console.log(toggle);
           }}
         >
           Login
         </button>
         <button
-          className="p-2 m-2 border-2 rounded-md bg-blue-800 text-white text-2xl text-center cursor-pointer"
+          className={`button1 ${toggle ? "clickedButton" : ""}`}
           onClick={() => {
             setToggle(true);
-            console.log(toggle);
           }}
         >
           Signup
@@ -98,6 +90,7 @@ function Body_main() {
           type="email"
           placeholder="Email Address"
           ref={saveEmail}
+          required
         />
       </div>
       {toggle && (
@@ -107,6 +100,7 @@ function Body_main() {
             type="text"
             placeholder="username"
             ref={saveUsername}
+            required
           />
         </div>
       )}
@@ -116,6 +110,7 @@ function Body_main() {
           type="password"
           placeholder="Password"
           ref={savePassword}
+          required
         />
       </div>
 
@@ -130,6 +125,21 @@ function Body_main() {
           {toggle ? "SignUp" : "SignIn"}
         </button>
       </div>
+      {!toggle && (
+        <div className="member">
+          <p>
+            Not a member ?{" "}
+            <span
+              className="cursor-pointer"
+              onClick={() => {
+                setToggle(true);
+              }}
+            >
+              Signup now{" "}
+            </span>
+          </p>
+        </div>
+      )}
     </div>
   );
 }
