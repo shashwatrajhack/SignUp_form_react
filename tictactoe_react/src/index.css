@@ -1,0 +1,57 @@
+body{
+    box-sizing: border-box;
+    
+}
+.main{
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    margin: 0;
+    align-items: center;
+    background-color: rgb(92, 80, 227);
+    flex-direction: column;
+    color: rgb(61, 3, 0);
+}
+.board {
+    background-color: white;
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  gap: 5px;
+  justify-content: center;
+  margin: 20px auto;
+}
+.square{
+     font-size: xxx-large;
+    width: 100px;
+    height: 100px;
+    font-weight: bolder;
+    text-align: center;
+    border: 1px solid;
+    cursor: pointer;
+   
+
+
+}
+.square:hover{
+    box-shadow: 0 10px 10px black;
+}
+
+.disable-square{
+     opacity: 0.6;
+    cursor: not-allowed;
+    background-color: #cccccc;
+    color: #666666;
+    border: 1px solid #999999;
+}
+
+.reset{
+    border: 2px;
+    background-color: grey;
+    color: black;
+    
+
+}
+
+.reset:hover{
+    cursor: pointer;
+}
