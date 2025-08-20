@@ -1,66 +1,56 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 
 function Body_main() {
   const [toggle, setToggle] = useState(false);
 
-  const saveEmail = useRef("");
-  const savePassword = useRef("");
-  const saveUsername = useRef("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
 
   const handleSave = () => {
-    if (
-      saveEmail === "" ||
-      savePassword === "" ||
-      (toggle && saveUsername === "")
-    ) {
-      window.alert("fill the details");
+    if (email === "" || password === "" || (toggle && username === "")) {
+      return window.alert("fill the details");
     }
 
     const data1 = localStorage.getItem("data");
 
     if (data1 === null) {
-      if(!toggle){
-        return window.alert("user doesn't exist")
+      if (!toggle) {
+        return window.alert("user doesn't exist");
       }
       let arr = [
         {
-          email: saveEmail.current.value,
-          password: savePassword.current.value,
-          userName: saveUsername.current.value,
+          email: email,
+          password: password,
+          userName: username,
         },
       ];
       localStorage.setItem("data", JSON.stringify(arr));
+      console.log(arr);
     } else {
       let data2 = JSON.parse(data1);
       for (let i = 0; i < data2.length; i++) {
         if (toggle) {
-          if (
-            data2[i].email === saveEmail.current.value ||
-            data2[i].password === savePassword.current.value
-          ) {
+          if (data2[i].email === email || data2[i].password === password) {
             return window.alert("user already exist");
           }
-        }
-        else{
-          if (
-            data2[i].email === saveEmail.current.value &&
-            data2[i].password === savePassword.current.value
-          ) {
+        } else {
+          if (data2[i].email === email && data2[i].password === password) {
             return window.alert("user loggedin");
           }
         }
       }
 
       data2.push({
-        email: saveEmail.current.value,
-        password: savePassword.current.value,
-        userName: saveUsername.current.value,
+        email: email,
+        password: password,
+        userName: username,
       });
       localStorage.setItem("data", JSON.stringify(data2));
     }
-    saveEmail.current.value = "";
-    savePassword.current.value = "";
-    saveUsername.current.value = "";
+    setEmail("");
+    setPassword("");
+    setUsername("");
     console.log(data1);
   };
 
@@ -89,7 +79,7 @@ function Body_main() {
           className="bg-white border-2 m-1 rounded-md w-full "
           type="email"
           placeholder="Email Address"
-          ref={saveEmail}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
       </div>
@@ -99,7 +89,7 @@ function Body_main() {
             className="bg-white border-2 rounded-md m-1 w-full"
             type="text"
             placeholder="username"
-            ref={saveUsername}
+            onChange={(e) => setUsername(e.target.value)}
             required
           />
         </div>
@@ -109,18 +99,25 @@ function Body_main() {
           className="bg-white border-2 rounded-md w-full"
           type="password"
           placeholder="Password"
-          ref={savePassword}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
       </div>
 
       <div>
-        <h6>Forgot Password ?</h6>
+        <h6>Forgot Password </h6>
       </div>
       <div>
         <button
-          className="bg-blue-600 rounded-md text-3xl text-white m-4 p-2 border-r-2"
+          className={`button2 ${
+            email === "" || password === "" || (toggle && username === "")
+              ? "disable_button"
+              : ""
+          }`}
           onClick={handleSave}
+          disabled={
+            email === "" || password === "" || (toggle && username === "")
+          }
         >
           {toggle ? "SignUp" : "SignIn"}
         </button>

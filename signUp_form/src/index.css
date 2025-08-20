@@ -24,4 +24,21 @@ body{
     text-align: center;
     justify-content: center;
 }
+/* //bg-blue-600 rounded-md text-3xl text-white m-4 p-2 border-r-2 */
+
+.button2{
+    background-color: rgb(37, 37, 181);
+    border-radius: 10px;
+    font-size: 18px;
+    color: white;
+    padding: 2px;
+    margin: 4px;
+
+
+
+}
+
+.disable_button{
+    background-color:rgb(88, 151, 223);
+}
 
