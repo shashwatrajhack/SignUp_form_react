@@ -1,0 +1,39 @@
+
+body{
+  background-color: pink;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+.main{
+
+  background-color: pink;
+  
+  display: flex;
+  justify-content: center;
+
+}
+label{
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.fields{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border-radius: 10px;
+ 
+}
+
+.form{
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+
