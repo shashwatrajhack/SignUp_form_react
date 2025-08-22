@@ -2,10 +2,10 @@ function Product({
   formValue,
   setFormValue,
   saveProduct,
-  setSaveProduct,
+    setSaveProduct,
   toggle,
   indx,
-  setToggle
+  setToggle, 
 }) {
   const handleForm = (value, keyName) => {
     setFormValue({ ...formValue, [keyName]: value });
@@ -15,7 +15,7 @@ function Product({
     saveProduct[indx] = formValue;
     setSaveProduct([...saveProduct]);
     localStorage.setItem("key", JSON.stringify(saveProduct));
-       setFormValue({
+    setFormValue({
       name: "",
       price: 500,
       productCat: "",
@@ -25,13 +25,13 @@ function Product({
       rid: 0,
       isNumberOfValue: "",
     });
-    setToggle(false)
+    setToggle(false);
   };
 
   const handleSubmit = () => {
     if (!formValue.name || !formValue.isAvailable) {
       return window.alert("fill details");
-    }
+    }[]
     formValue.rid = saveProduct.length + 1;
     setSaveProduct([...saveProduct, formValue]);
     setFormValue({

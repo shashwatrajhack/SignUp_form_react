@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 
 function App() {
   const [toggle, setToggle] = useState(false);
-  
+  const [saveProduct, setSaveProduct] = useState([]);
   const [indx, setIndx] = useState(null);
   const [formValue, setFormValue] = useState({
     name: "",
@@ -17,7 +17,7 @@ function App() {
     rid: 0,
     isNumberOfValue: "",
   });
-  const [saveProduct, setSaveProduct] = useState([]);
+
   useEffect(() => {
     const saved = localStorage.getItem("key");
     if (saved) {
