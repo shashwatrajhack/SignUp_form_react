@@ -1,8 +1,6 @@
-import { useState } from "react";
-function Home(){
-    const [inputValue, setInputValue] = useState("");
-  const [addTodo, setAddTodo] = useState({});
-
+import { Link } from "react-router-dom";
+function Home({ addTodo, inputValue, setAddTodo, setInputValue }) {
+  // {grocery:['rice','maida'],game:['cdf']}
   const handleClick = () => {
     setAddTodo({ ...addTodo, [inputValue]: [] });
     setInputValue("");
@@ -10,15 +8,14 @@ function Home(){
 
   const deleteHandle = () => {
     let lastValue = Object.keys(addTodo).pop();
-    delete addTodo[lastValue]
-        setAddTodo({...addTodo});
-  }
-  const handleInput = (e)=>{
-    if(e.keyCode === 13){
-      handleClick()
+    delete addTodo[lastValue];
+    setAddTodo({ ...addTodo });
+  };
+  const handleInput = (e) => {
+    if (e.keyCode === 13) {
+      handleClick();
     }
-  }
-  
+  };
 
   return (
     <div>
@@ -27,11 +24,14 @@ function Home(){
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         onKeyUp={(e) => handleInput(e)}
-/>
+      />
       <button onClick={handleClick}>Add</button>
       <button onClick={deleteHandle}>Delete</button>
-      {Object.keys(addTodo).map((x) => (
-        <li>{x}</li>
+
+      {Object.keys(addTodo).map((x, i) => (
+        <Link key={i} to={`/subtodo/${x}`}>
+          <li key={i}>{x}</li>
+        </Link>
       ))}
     </div>
   );
