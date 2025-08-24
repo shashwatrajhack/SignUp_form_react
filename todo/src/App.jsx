@@ -10,7 +10,6 @@ import Subtodo from "./components/Subtodo";
 import { useState } from "react";
 
 function App() {
-  const [inputValue, setInputValue] = useState("");
   const [addTodo, setAddTodo] = useState({});
   return (
     <Router>
@@ -23,8 +22,6 @@ function App() {
               <Home
                 addTodo={addTodo}
                 setAddTodo={setAddTodo}
-                inputValue={inputValue}
-                setInputValue={setInputValue}
               />
             }
           />

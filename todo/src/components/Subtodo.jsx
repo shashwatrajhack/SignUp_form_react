@@ -14,12 +14,18 @@ function Subtodo({ addTodo, setAddTodo }) {
     if (!addTodo[keyname]) {
       navigate("/home", { replace: true });
     }
-  }, []);
+  });
 
   function handleTodo() {
     addTodo[keyname].push(inputValue);
     setAddTodo({...addTodo});
     setInputValue("");
+  }
+
+  function handleClick(e){
+    if (e.keyCode === 13){
+      handleTodo()
+    }
   }
 
   function deleteTodo(){
@@ -28,11 +34,11 @@ function Subtodo({ addTodo, setAddTodo }) {
   }
 
   //console.log(useParams().name)
-  console.log(addTodo[useParams().name]);
+  console.log(addTodo[keyname]);
   return (
     <div>
       <div>Add your todo here</div>
-      <input value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
+      <input value={inputValue} onKeyUp={(e) => handleClick(e)} onChange={(e) => setInputValue(e.target.value)} />
       <button onClick={handleTodo}>Add Todo</button>
       <button onClick={deleteTodo}>Delete Todo</button>
 

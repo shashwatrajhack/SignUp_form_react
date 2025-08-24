@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
-function Home({ addTodo, inputValue, setAddTodo, setInputValue }) {
+import { useState } from "react";
+
+function Home({ addTodo, setAddTodo }) {
   // {grocery:['rice','maida'],game:['cdf']}
+  
+    const [inputValue, setInputValue] = useState("");
   const handleClick = () => {
     setAddTodo({ ...addTodo, [inputValue]: [] });
     setInputValue("");
