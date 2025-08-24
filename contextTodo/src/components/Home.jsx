@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 export default function Home() {
   const { addTodo, setAddTodo } = useContext(TodoContext);
   const [inputValue, setInputValue] = useState("");
+  const [tmp, setTmp] = useState({});
 
   const handleClick = () => {
     if (!inputValue.trim()) return;
@@ -12,10 +13,12 @@ export default function Home() {
     setInputValue("");
   };
 
-  const deleteHandle = () => {
-    let lastValue = Object.keys(addTodo).pop();
-    if (lastValue) {
-      delete addTodo[lastValue];
+  const deleteHandle = (x) => {
+    
+
+    if (x) {
+        
+      delete addTodo[x];
       setAddTodo({ ...addTodo });
     }
   };
@@ -26,9 +29,19 @@ export default function Home() {
     }
   };
 
-  const editTodo = () => {
-    setInputValue()
-
+  const editTodo = (x) => {
+    setInputValue(x);
+    setTmp({[x]:addTodo[x]})// {game:["sd"]}
+  }
+  const handleUpdate = ()=>{
+    // tmp = {game:["sd"]}
+    // Object.keys(tmp) = ["game"]
+    // tmp[Object.keys(tmp)[0]]  = tmp['game']
+    addTodo[inputValue] = tmp[Object.keys(tmp)[0]]
+    delete addTodo[Object.keys(tmp)[0]];
+    setAddTodo({...addTodo})
+    setTmp({});
+    setInputValue('')
   }
   return (
     <div>
@@ -39,15 +52,19 @@ export default function Home() {
         onKeyUp={(e) => handleInput(e)}
       />
 
-      <button onClick={handleClick}>Add Todo</button>
-      <button onClick={deleteHandle}>Delete Todo</button>
+      {!Object.keys(tmp)?.length ? <button onClick={handleClick}>Add Todo</button> : <button onClick={handleUpdate}>Update Todo</button>}
+      
 
       {Object.keys(addTodo).map((x, i) => (
+        <div className="todoList">
         <Link key={i} to={`/subtodo/${x}`}>
           <li>
-            {x} <button>edit</button>
+            {x}
           </li>
         </Link>
+         <button onClick={()=>editTodo(x)}>edit</button>
+        <button onClick={() => deleteHandle(x)}>Delete Todo</button>
+        </div>
       ))}
     </div>
   );
